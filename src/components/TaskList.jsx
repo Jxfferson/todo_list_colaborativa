@@ -2,8 +2,8 @@ import React from 'react'
 import { Edit, Trash2, CheckCircle, Circle, User } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 
-export function TaskList({ onEditTask }) {
-  const { tasks, updateTask, deleteTask } = useTasks()
+export function TaskList({ onEditTask, filter }) {
+  const { tasks, updateTask, deleteTask } = useTasks() // 👈 Hooks solo aquí
 
   const handleToggleComplete = async (task) => {
     try {
@@ -33,17 +33,24 @@ export function TaskList({ onEditTask }) {
     })
   }
 
-  if (tasks.length === 0) {
+  // Filtrar tareas según el filtro seleccionado
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'completed') return task.completed
+    if (filter === 'inprogress') return !task.completed
+    return true // 'all'
+  })
+
+  if (filteredTasks.length === 0) {
     return (
       <div className="text-center py-12 text-gray-500">
-        <p>No hay tareas creadas</p>
+        <p>No hay tareas {filter === 'all' ? '' : filter === 'completed' ? 'completadas' : 'en proceso'}</p>
       </div>
     )
   }
 
   return (
     <div className="space-y-4">
-      {tasks.map(task => (
+      {filteredTasks.map(task => (
         <div key={task.id} className="bg-white p-4 rounded-lg shadow-md border">
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-3 flex-1">

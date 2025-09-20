@@ -1,50 +1,50 @@
-import React, { useState, useEffect } from 'react'
-import { Plus, Save, X } from 'lucide-react'
-import { useTasks } from '../context/TaskContext'
+import React, { useState, useEffect } from 'react';
+import { Plus, Save, X } from 'lucide-react';
+import { useTasks } from '../context/TaskContext';
 
-export function TaskForm({ editingTask, onCancelEdit }) {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const { createTask, updateTask, showAlert } = useTasks()
+export default function TaskForm({ editingTask, onCancelEdit }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const { createTask, updateTask, showAlert } = useTasks();
 
   useEffect(() => {
     if (editingTask) {
-      setTitle(editingTask.title)
-      setDescription(editingTask.description || '')
+      setTitle(editingTask.title);
+      setDescription(editingTask.description || '');
     } else {
-      setTitle('')
-      setDescription('')
+      setTitle('');
+      setDescription('');
     }
-  }, [editingTask])
+  }, [editingTask]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (!title.trim()) {
-      showAlert('El título es requerido', 'error')
-      return
+      showAlert('El título es requerido', 'error');
+      return;
     }
 
     try {
       if (editingTask) {
-        await updateTask(editingTask.id, { title, description })
-        onCancelEdit() // Salir del modo edición
+        await updateTask(editingTask.id, { title, description });
+        onCancelEdit(); // Salir del modo edición
       } else {
-        await createTask({ title, description })
+        await createTask({ title, description });
       }
-      setTitle('')
-      setDescription('')
+      setTitle('');
+      setDescription('');
     } catch (error) {
-      console.error('Error saving task:', error)
+      console.error('Error saving task:', error);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md mb-6">
       <h2 className="text-xl font-semibold mb-4">
         {editingTask ? 'Editar Tarea' : 'Nueva Tarea'}
       </h2>
-      
+
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium mb-1">Título *</label>
@@ -54,6 +54,7 @@ export function TaskForm({ editingTask, onCancelEdit }) {
             onChange={(e) => setTitle(e.target.value)}
             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
             placeholder="Título de la tarea"
+            data-testid="input-title"
           />
         </div>
 
@@ -65,6 +66,7 @@ export function TaskForm({ editingTask, onCancelEdit }) {
             rows={3}
             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
             placeholder="Descripción de la tarea"
+            data-testid="input-description"
           />
         </div>
 
@@ -90,5 +92,5 @@ export function TaskForm({ editingTask, onCancelEdit }) {
         </div>
       </div>
     </form>
-  )
+  );
 }

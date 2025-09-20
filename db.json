@@ -15,14 +15,14 @@
   ],
   "tasks": [
     {
-      "id": "bcb5",
-      "title": "holas",
-      "description": "addsd",
-      "createdAt": "2025-09-20T01:12:25.632Z",
-      "createdBy": "J",
-      "updatedAt": "2025-09-20T01:13:21.781Z",
-      "updatedBy": "J",
-      "completed": false
+      "id": "b525",
+      "title": "dsa",
+      "description": "dsadsa",
+      "createdAt": "2025-09-20T15:26:08.085Z",
+      "createdBy": "Administrador",
+      "updatedAt": "2025-09-20T15:26:25.013Z",
+      "updatedBy": "Administrador",
+      "completed": true
     }
   ]
 }

@@ -96,6 +96,11 @@ export function TaskProvider({ children }) {
     }, 5000)
   }
 
+  // Cerrar alerta manualmente
+  const closeAlert = (id) => {
+    setAlerts(prev => prev.filter(alert => alert.id !== id))
+  }
+
   useEffect(() => {
     if (user) {
       loadTasks()
@@ -110,7 +115,8 @@ export function TaskProvider({ children }) {
     updateTask,
     deleteTask,
     loadTasks,
-    showAlert
+    showAlert,
+    closeAlert 
   }
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>

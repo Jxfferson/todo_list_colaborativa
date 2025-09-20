@@ -11,23 +11,16 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
-    }
+    if (savedUser) setUser(JSON.parse(savedUser))
   }, [])
 
   const login = async (username, password) => {
     try {
       const res = await axios.get(`${API_USERS}`)
       const users = res.data
+      const foundUser = users.find(u => u.username === username && u.password === password)
 
-      const foundUser = users.find(
-        u => u.username === username && u.password === password
-      )
-
-      if (!foundUser) {
-        return { ok: false, message: 'Credenciales inválidas' }
-      }
+      if (!foundUser) return { ok: false, message: 'Credenciales inválidas' }
 
       const session = {
         id: foundUser.id,

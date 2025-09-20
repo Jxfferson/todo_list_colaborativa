@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const { login } = useAuth()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    const result = await login(username, password)
+    e.preventDefault();
+    setError('');
+    const result = await login(username, password);
     if (!result.ok) {
-      setError(result.message)
+      setError(result.message);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -30,6 +30,7 @@ export default function Login() {
               onChange={(e) => setUsername(e.target.value)}
               className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
               required
+              placeholder="Usuario"
             />
           </div>
 
@@ -41,6 +42,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
               required
+              placeholder="Contraseña"
             />
           </div>
 
@@ -67,5 +69,5 @@ export default function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }

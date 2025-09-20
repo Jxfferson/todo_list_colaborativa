@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+<a name="readme-top"></a>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
 
-## Available Scripts
+<br/>
+<h3><b>TODO-LIST COLABORATIVA</b></h3>
 
-In the project directory, you can run:
+</div>
 
-### `npm start`
+# ✅ TABLE OF CONTENTS
+- [📖 About the Project](#about-project)
+  - [⚒️ Built With](#built-with)
+    - [Tech Stack](#tech-stack)
+    - [Key Features](#key-features)
+  - [🚀 Live Demo](#live-demo)
+- [💻 Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Run Tests](#run-tests)
+  - [Deployment](#deployment)
+- [👥 Authors](#authors)
+- [🕹️ Future Features](#future-features)
+- [📃 License](#license)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# 📖 About the Project <a name="about-project"></a>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Todo-List Colaborativa** es una aplicación web que permite a múltiples usuarios crear, editar y eliminar tareas de manera colaborativa.  
+El proyecto incluye autenticación de usuarios, roles y sincronización de tareas en tiempo real mediante la base de datos.
 
-### `npm test`
+## ⚒️ Built With <a name="built-with"></a>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Este proyecto fue desarrollado usando tecnologías modernas de frontend y backend:
 
-### `npm run build`
+### Tech Stack <a name="tech-stack"></a>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Frontend:** React, Next.js, TailwindCSS  
+- **Backend:** Node.js, Express (o tu backend elegido)  
+- **Base de datos:** MongoDB  
+- **Control de versiones:** Git, GitHub  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Key Features <a name="key-features"></a>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Creación, edición y eliminación de tareas.  
+- Gestión de usuarios y roles (admin, colaborador).  
+- Sincronización de tareas entre usuarios en tiempo real.  
+- Sistema de login con persistencia de sesión.  
+- Interfaz responsiva y accesible.  
 
-### `npm run eject`
+<p align="right"><a href="#readme-top">Back to top</a></p>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 💻 Getting Started <a name="getting-started"></a>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Sigue estos pasos para correr el proyecto localmente.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Prerequisites <a name="prerequisites"></a>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Node.js (v18+ recomendado)  
+- npm o yarn  
+- MongoDB local o Atlas  
+- Git y GitHub  
 
-## Learn More
+### Setup <a name="setup"></a>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Clona el repositorio:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+git clone https://github.com/tu-usuario/todo-list-colaborativa.git 
+```
+```sh
+cd todo-list-colaborativa
+```
+### Instalar las dependencias  <a name="install"></a>
+```sh
+npm install
+```
+# o
+```sh
+yarn install
+```
+### Usage <a name="usage"></a>
+Para correr la aplicación en desarrollo:
 
-### Code Splitting
+```sh
+npm run dev
+```
+# o
+```sh
+yarn dev
+```
+Abre ```sh http://localhost:3000 ``` en tu navegador.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Run Tests <a name="run-tests"></a>
+Para ejecutar pruebas unitarias con Jest y Testing Library:
 
-### Analyzing the Bundle Size
+```sh
+npm run test
+```
+# o
+```sh
+yarn test
+```
+### Deployment <a name="deployment"></a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<p align="right"><a href="#readme-top">Back to top</a></p>
 
-### Making a Progressive Web App
+### Authors 👥  <a name="authors"></a>
+```sh
+Jefferson Correa
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+GitHub: @Jxfferson
+```
+```sh
+Jose Correa
 
-### Advanced Configuration
+GitHub: @J0S3S1T0
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Future Features <a name="future-features"></a>
+```sh
+Notificaciones en tiempo real.
 
-### Deployment
+Integración con calendario y recordatorios.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Subida de archivos adjuntos a tareas.
 
-### `npm run build` fails to minify
+Multi-idioma y accesibilidad avanzada para muchos mas usuarios.
+```
+### License <a name="license"></a>
+```sh
+Este proyecto está bajo la licencia MIT
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<p align="right"><a href="./LICENSE.md">Back to top</a></p> ```
