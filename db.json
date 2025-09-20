@@ -10,18 +10,18 @@
       "id": "2",
       "username": "usuario2",
       "password": "abcd",
-      "name": "Segundo Usuario"
+      "name": "J"
     }
   ],
   "tasks": [
     {
-      "id": "891c",
-      "title": "actualizaremos la tarea",
-      "description": "holaholahola",
-      "createdAt": "2025-09-20T00:12:08.574Z",
-      "createdBy": "Segundo Usuario",
-      "updatedAt": "2025-09-20T00:19:24.152Z",
-      "updatedBy": "Segundo Usuario",
+      "id": "bcb5",
+      "title": "holas",
+      "description": "addsd",
+      "createdAt": "2025-09-20T01:12:25.632Z",
+      "createdBy": "J",
+      "updatedAt": "2025-09-20T01:13:21.781Z",
+      "updatedBy": "J",
       "completed": false
     }
   ]
