@@ -26,7 +26,8 @@
     "test:coverage": "react-scripts test --coverage",
     "test:watch": "react-scripts test --watchAll",
     "dev": "vite",
-    "server": "json-server --watch db.json --port 3000"
+    "server": "json-server --watch db.json --port 3000",
+    "lint": "eslint . --ext .js"
   },
   "eslintConfig": {
     "extends": [
