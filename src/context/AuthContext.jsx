@@ -1,13 +1,9 @@
 import React, { createContext, useContext, useMemo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+// Importamos usuarios locales
+import { users } from '../data'
 
 const AuthContext = createContext(null)
-
-// Usuarios "mock" guardados en código
-const MOCK_USERS = [
-  { id: 1, username: 'admin', password: '1234', name: 'Administrador' },
-  { id: 2, username: 'usuario2', password: 'abcd', name: 'J' },
-]
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -19,10 +15,8 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = async (username, password) => {
-    // Simular delay opcional: await new Promise(r => setTimeout(r, 300))
-    const foundUser = MOCK_USERS.find(
-      u => u.username === username && u.password === password
-    )
+    // Buscamos en la lista local
+    const foundUser = users.find(u => u.username === username && u.password === password)
 
     if (!foundUser) return { ok: false, message: 'Credenciales inválidas' }
 

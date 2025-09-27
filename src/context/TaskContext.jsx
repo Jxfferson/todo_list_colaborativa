@@ -1,51 +1,51 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useAuth } from './AuthContext'
+import { initialTasks } from '../data'
 
 const TaskContext = createContext(null)
-
-const TASKS_STORAGE_KEY = 'tasks'
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([])
   const [alerts, setAlerts] = useState([])
   const { user } = useAuth()
 
-  // Cargar tareas desde localStorage
+  // Cargar tareas desde localStorage o initialTasks
   const loadTasks = () => {
-    const storedTasks = localStorage.getItem(TASKS_STORAGE_KEY)
-    if (storedTasks) {
-      setTasks(JSON.parse(storedTasks))
+    const savedTasks = localStorage.getItem('tasks')
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks))
     } else {
-      setTasks([])
+      setTasks(initialTasks)
+      localStorage.setItem('tasks', JSON.stringify(initialTasks))
     }
   }
 
   // Guardar tareas en localStorage
-  const saveTasks = (tasksToSave) => {
-    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasksToSave))
-    setTasks(tasksToSave)
+  const saveTasks = (newTasks) => {
+    setTasks(newTasks)
+    localStorage.setItem('tasks', JSON.stringify(newTasks))
   }
 
   // Crear tarea
   const createTask = (taskData) => {
     const newTask = {
-      id: Date.now(),
       ...taskData,
+      id: tasks.length ? Math.max(...tasks.map(t => t.id)) + 1 : 1,
       createdAt: new Date().toISOString(),
       createdBy: user.name,
       updatedAt: new Date().toISOString(),
       updatedBy: user.name,
       completed: false
     }
-    const updatedTasks = [...tasks, newTask]
-    saveTasks(updatedTasks)
+    const newTasks = [...tasks, newTask]
+    saveTasks(newTasks)
     showAlert('Tarea creada exitosamente', 'success')
     return newTask
   }
 
   // Actualizar tarea
   const updateTask = (id, updates) => {
-    const updatedTasks = tasks.map(task => {
+    const newTasks = tasks.map(task => {
       if (task.id === id) {
         return {
           ...task,
@@ -56,19 +56,19 @@ export function TaskProvider({ children }) {
       }
       return task
     })
-    saveTasks(updatedTasks)
+    saveTasks(newTasks)
     showAlert('Tarea actualizada exitosamente', 'success')
-    return updatedTasks.find(t => t.id === id)
+    return newTasks.find(t => t.id === id)
   }
 
   // Eliminar tarea
   const deleteTask = (id) => {
-    const updatedTasks = tasks.filter(task => task.id !== id)
-    saveTasks(updatedTasks)
+    const newTasks = tasks.filter(task => task.id !== id)
+    saveTasks(newTasks)
     showAlert('Tarea eliminada exitosamente', 'success')
   }
 
-  // Alertas
+  // Mostrar alertas
   const showAlert = (message, type = 'info') => {
     const newAlert = {
       id: Date.now(),
@@ -83,6 +83,7 @@ export function TaskProvider({ children }) {
     }, 5000)
   }
 
+  // Cerrar alerta manualmente
   const closeAlert = (id) => {
     setAlerts(prev => prev.filter(alert => alert.id !== id))
   }
@@ -101,9 +102,8 @@ export function TaskProvider({ children }) {
     createTask,
     updateTask,
     deleteTask,
-    loadTasks,
     showAlert,
-    closeAlert,
+    closeAlert
   }
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>

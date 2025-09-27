@@ -1,0 +1,27 @@
+export const users = [
+  {
+    id: 1,
+    username: "admin",
+    password: "1234",
+    name: "Administrador"
+  },
+  {
+    id: 2,
+    username: "usuario2",
+    password: "abcd",
+    name: "J"
+  }
+];
+
+export const initialTasks = [
+  {
+    id: 1,
+    title: "Tarea de ejemplo",
+    description: "Esta es una tarea de ejemplo",
+    completed: false,
+    createdAt: "2024-01-15T10:30:00.000Z",
+    createdBy: "Administrador",
+    updatedAt: "2024-01-15T11:00:00.000Z",
+    updatedBy: "Administrador"
+  }
+];
