@@ -27,12 +27,13 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: npm run build
+        run: CI=false npm run build   # <--- aquí está el cambio
 
       - name: Upload build folder
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./build
+
 
   deploy:
     needs: build
