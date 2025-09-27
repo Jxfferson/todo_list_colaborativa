@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTasks } from '../context/TaskContext'
 import { AlertContainer } from '../components/Alert'
-import { TaskForm } from '../components/TaskForm'
+import TaskForm  from '../components/TaskForm'
 import { TaskList } from '../components/TaskList'
 
 export default function TasksPage() {
