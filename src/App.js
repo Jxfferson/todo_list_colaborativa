@@ -8,7 +8,7 @@ import TasksPage from './pages/TasksPage';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/todo_list_colaborativa/">
       <AuthProvider>
         <TaskProvider>
           <Routes>
