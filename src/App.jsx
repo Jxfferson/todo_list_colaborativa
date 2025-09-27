@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { TaskProvider } from './context/TaskContext'
 import Login from './components/Login'
@@ -22,6 +22,10 @@ function AppRoutes() {
       <Route 
         path="/" 
         element={<Navigate to={isAuthenticated ? "/tasks" : "/login"} replace />} 
+      />
+      <Route 
+        path="*"
+        element={<Navigate to="/login" replace />}
       />
     </Routes>
   )
