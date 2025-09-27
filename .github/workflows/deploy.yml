@@ -1,46 +1,46 @@
 name: Deploy to GitHub Pages
- 
+
 on:
   push:
     branches:
-      - develop   # 👈 Se ejecutará cuando hagas push a la rama develop
- 
+      - develop
+
 permissions:
-  contents: read   # 👈 corregido (no "red")
+  contents: read
   pages: write
   id-token: write
- 
+
 jobs:
   build:
-    runs-on: ubuntu-latest   # 👈 faltaba el valor
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4   # 👈 movido al lugar correcto
- 
+        uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
- 
+
       - name: Install dependencies
         run: npm ci
- 
+
       - name: Build project
         run: npm run build
- 
-      - name: Upload dist folder
+
+      - name: Upload build folder
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
- 
+          path: ./build
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:              # corregido (era "enviroment")
+    environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}   # corregido espacio
- 
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
