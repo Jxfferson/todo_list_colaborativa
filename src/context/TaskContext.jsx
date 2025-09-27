@@ -3,9 +3,7 @@ import axios from 'axios'
 import { useAuth } from './AuthContext'
 
 const TaskContext = createContext(null)
-
-// Usa variables de entorno, fallback a localhost si no están definidas
-const API_TASKS = import.meta.env.VITE_API_TASKS || 'http://localhost:3000/tasks'
+const API_TASKS = 'http://localhost:3000/tasks'
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([])

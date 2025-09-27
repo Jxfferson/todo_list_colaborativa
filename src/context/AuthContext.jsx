@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const AuthContext = createContext(null)
-
-// Usa variables de entorno, fallback a localhost si no están definidas
-const API_USERS = import.meta.env.VITE_API_USERS || 'http://localhost:3000/users'
+const API_USERS = 'http://localhost:3000/users'
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -18,7 +16,7 @@ export function AuthProvider({ children }) {
 
   const login = async (username, password) => {
     try {
-      const res = await axios.get(API_USERS)
+      const res = await axios.get(`${API_USERS}`)
       const users = res.data
       const foundUser = users.find(u => u.username === username && u.password === password)
 
