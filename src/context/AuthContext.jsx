@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useMemo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-// Importamos usuarios locales
-import { users } from '../data'
+import axios from 'axios'
 
 const AuthContext = createContext(null)
+const API_USERS = 'http://localhost:3000/users'
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -15,23 +15,28 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = async (username, password) => {
-    // Buscamos en la lista local
-    const foundUser = users.find(u => u.username === username && u.password === password)
+    try {
+      const res = await axios.get(`${API_USERS}`)
+      const users = res.data
+      const foundUser = users.find(u => u.username === username && u.password === password)
 
-    if (!foundUser) return { ok: false, message: 'Credenciales inválidas' }
+      if (!foundUser) return { ok: false, message: 'Credenciales inválidas' }
 
-    const session = {
-      id: foundUser.id,
-      username: foundUser.username,
-      name: foundUser.name,
-      token: `token-${Date.now()}-${foundUser.id}`
+      const session = {
+        id: foundUser.id,
+        username: foundUser.username,
+        name: foundUser.name,
+        token: `token-${Date.now()}-${foundUser.id}`
+      }
+
+      setUser(session)
+      localStorage.setItem('user', JSON.stringify(session))
+      navigate('/tasks', { replace: true })
+
+      return { ok: true }
+    } catch (error) {
+      return { ok: false, message: 'Error en el servidor' }
     }
-
-    setUser(session)
-    localStorage.setItem('user', JSON.stringify(session))
-    navigate('/tasks', { replace: true })
-
-    return { ok: true }
   }
 
   const logout = () => {
