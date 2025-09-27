@@ -2,6 +2,7 @@
   "name": "todo-list-colaborativa",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jxfferson.github.io/todo_list_colaborativa",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "assert": "^2.1.0",
