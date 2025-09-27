@@ -1,85 +1,74 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import axios from 'axios'
 import { useAuth } from './AuthContext'
 
 const TaskContext = createContext(null)
-const API_TASKS = 'http://localhost:3000/tasks'
+
+const TASKS_STORAGE_KEY = 'tasks'
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([])
-  const [loading, setLoading] = useState(false)
   const [alerts, setAlerts] = useState([])
   const { user } = useAuth()
 
-  // Cargar tareas
-  const loadTasks = async () => {
-    try {
-      setLoading(true)
-      const res = await axios.get(API_TASKS)
-      setTasks(res.data)
-    } catch (error) {
-      showAlert('Error al cargar tareas', 'error')
-    } finally {
-      setLoading(false)
+  // Cargar tareas desde localStorage
+  const loadTasks = () => {
+    const storedTasks = localStorage.getItem(TASKS_STORAGE_KEY)
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks))
+    } else {
+      setTasks([])
     }
+  }
+
+  // Guardar tareas en localStorage
+  const saveTasks = (tasksToSave) => {
+    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasksToSave))
+    setTasks(tasksToSave)
   }
 
   // Crear tarea
-  const createTask = async (taskData) => {
-    try {
-      const newTask = {
-        ...taskData,
-        createdAt: new Date().toISOString(),
-        createdBy: user.name,
-        updatedAt: new Date().toISOString(),
-        updatedBy: user.name,
-        completed: false
-      }
-
-      const res = await axios.post(API_TASKS, newTask)
-      setTasks(prev => [...prev, res.data])
-      showAlert('Tarea creada exitosamente', 'success')
-      return res.data
-    } catch (error) {
-      showAlert('Error al crear tarea', 'error')
-      throw error
+  const createTask = (taskData) => {
+    const newTask = {
+      id: Date.now(),
+      ...taskData,
+      createdAt: new Date().toISOString(),
+      createdBy: user.name,
+      updatedAt: new Date().toISOString(),
+      updatedBy: user.name,
+      completed: false
     }
+    const updatedTasks = [...tasks, newTask]
+    saveTasks(updatedTasks)
+    showAlert('Tarea creada exitosamente', 'success')
+    return newTask
   }
 
   // Actualizar tarea
-  const updateTask = async (id, updates) => {
-    try {
-      const taskToUpdate = tasks.find(task => task.id === id)
-      const updatedTask = {
-        ...taskToUpdate,
-        ...updates,
-        updatedAt: new Date().toISOString(),
-        updatedBy: user.name
+  const updateTask = (id, updates) => {
+    const updatedTasks = tasks.map(task => {
+      if (task.id === id) {
+        return {
+          ...task,
+          ...updates,
+          updatedAt: new Date().toISOString(),
+          updatedBy: user.name
+        }
       }
-
-      const res = await axios.put(`${API_TASKS}/${id}`, updatedTask)
-      setTasks(prev => prev.map(task => task.id === id ? res.data : task))
-      showAlert('Tarea actualizada exitosamente', 'success')
-      return res.data
-    } catch (error) {
-      showAlert('Error al actualizar tarea', 'error')
-      throw error
-    }
+      return task
+    })
+    saveTasks(updatedTasks)
+    showAlert('Tarea actualizada exitosamente', 'success')
+    return updatedTasks.find(t => t.id === id)
   }
 
   // Eliminar tarea
-  const deleteTask = async (id) => {
-    try {
-      await axios.delete(`${API_TASKS}/${id}`)
-      setTasks(prev => prev.filter(task => task.id !== id))
-      showAlert('Tarea eliminada exitosamente', 'success')
-    } catch (error) {
-      showAlert('Error al eliminar tarea', 'error')
-      throw error
-    }
+  const deleteTask = (id) => {
+    const updatedTasks = tasks.filter(task => task.id !== id)
+    saveTasks(updatedTasks)
+    showAlert('Tarea eliminada exitosamente', 'success')
   }
 
-  // Mostrar alertas
+  // Alertas
   const showAlert = (message, type = 'info') => {
     const newAlert = {
       id: Date.now(),
@@ -88,15 +77,12 @@ export function TaskProvider({ children }) {
       timestamp: new Date().toISOString(),
       user: user?.name || 'Sistema'
     }
-    
     setAlerts(prev => [...prev, newAlert])
-    
     setTimeout(() => {
       setAlerts(prev => prev.filter(alert => alert.id !== newAlert.id))
     }, 5000)
   }
 
-  // Cerrar alerta manualmente
   const closeAlert = (id) => {
     setAlerts(prev => prev.filter(alert => alert.id !== id))
   }
@@ -104,19 +90,20 @@ export function TaskProvider({ children }) {
   useEffect(() => {
     if (user) {
       loadTasks()
+    } else {
+      setTasks([])
     }
   }, [user])
 
   const value = {
     tasks,
-    loading,
     alerts,
     createTask,
     updateTask,
     deleteTask,
     loadTasks,
     showAlert,
-    closeAlert 
+    closeAlert,
   }
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>
